@@ -7,13 +7,13 @@
 var mysql = require('mysql')
 
 // Create a 'connection pool' using the provided credentials
-var pool = mysql.createPool({
-    connectionLimit : 10,
-    host            : 'localhost',
-    user            : 'root',
-    password        : 'DavenportCentral123!',
-    database        : 'museum_db'
-})
+const pool = mysql.createPool({
+    connectionLimit: 10,
+    host: 'localhost',
+    user: 'root',
+    password: 'your_password',
+    database: 'museum_db'
+  });
 
 // Export it for use in our applicaiton
 module.exports.pool = pool;
