@@ -111,4 +111,8 @@ http://localhost:9546
 - **Joseph Storto** – [GitHub Profile](https://github.com/Jstorto21)
 
 This project was developed for CS340 – Introduction to Databases at Oregon State University.
+## Demo
+
+Watch a short walkthrough of the app here: 
+https://media.oregonstate.edu/media/t/1_dkkd2dna
 
