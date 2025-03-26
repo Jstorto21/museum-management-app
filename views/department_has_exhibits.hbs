@@ -1,0 +1,115 @@
+<!-- 
+    // Joseph Storto
+    // 3/17/2024
+    // Node.js implementation code adapted from osu-cs340-ecampus/nodejs-starter-app
+    // Scope: Code from starter app adapted to handle Node.js and Handlebars general implementation and boilerplate and functionality
+    // Original code contained in navigation, layout, SQL queries, data verification, and specific implementation details
+    // Source: https://github.com/osu-cs340-ecampus/nodejs-starter-app 
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Department-Exhibit Relationship</title>
+</head>
+<body>
+    <header>
+        <h1>Department-Exhibit Relationship</h1>
+        <div>
+            <button class="nav-button" onclick="location.href='/'">Home</button>
+            <button class="nav-button" onclick="location.href='/departments'">Departments</button>
+            <button class="nav-button" onclick="location.href='/artworks'">Artworks</button>
+            <button class="nav-button" onclick="location.href='/employees'">Employees</button>
+            <button class="nav-button" onclick="location.href='/exhibits'">Exhibits</button>
+            <button class="nav-button" onclick="location.href='/department_has_exhibits'">Intersection Table</button>
+        </div>
+    </header>
+
+    <h2>View Department-Exhibit Relationships</h2>
+
+    <!-- Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Department</th>
+                <th>Exhibit</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each relationships}}
+            <tr data-department="{{this.departmentID}}" data-exhibit="{{this.exhibitID}}">
+                <td>{{this.department}}</td>
+                <td>{{this.exhibit}}</td>
+                <td>
+                    <button class="nav-button" onclick="populateEditForm({{this.departmentID}}, '{{this.department}}', {{this.exhibitID}}, '{{this.exhibit}}')">Edit</button>
+                    <button class="nav-button" onclick="populateDeleteForm({{this.departmentID}}, '{{this.department}}', {{this.exhibitID}}, '{{this.exhibit}}')">Delete</button>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+    <!-- Edit Relationship Form -->
+    <div id="editForm" class="form-container" style="display: none;">
+        <h3>Edit Relationship</h3>
+        <form id="edit-relationship-form">
+            <input type="hidden" id="edit-departmentID">
+            <input type="hidden" id="edit-exhibitID">
+
+            <label>Current Exhibit:</label>
+            <input type="text" id="edit-exhibitName" disabled>
+
+            <label>Select New Department:</label>
+            <select id="edit-departmentDropdown">
+                {{#each departments}}
+                    <option value="{{this.departmentID}}">{{this.departmentName}}</option>
+                {{/each}}
+            </select>
+
+            <button class="nav-button" type="submit">Update Relationship</button>
+        </form>
+    </div>
+
+    <!-- Delete Confirmation Form -->
+    <div id="deleteForm" class="form-container" style="display: none;">
+        <h3>Delete Relationship</h3>
+        <p>Are you sure you want to remove the relationship between <strong id="deleteDepartmentName"></strong> and <strong id="deleteExhibitName"></strong>?</p>
+        <input type="hidden" id="delete-departmentID">
+        <input type="hidden" id="delete-exhibitID">
+        <button class="nav-button" onclick="deleteRelationship()">Confirm Delete</button>
+    </div>
+
+    <script>
+        function populateEditForm(departmentID, departmentName, exhibitID, exhibitName) {
+            document.getElementById("edit-departmentID").value = departmentID;
+            document.getElementById("edit-exhibitID").value = exhibitID;
+            document.getElementById("edit-exhibitName").value = exhibitName;
+            
+            // Set the selected department in the dropdown
+            let dropdown = document.getElementById("edit-departmentDropdown");
+            for (let i = 0; i < dropdown.options.length; i++) {
+                if (dropdown.options[i].value == departmentID) {
+                    dropdown.options[i].selected = true;
+                    break;
+                }
+            }
+
+            document.getElementById("editForm").style.display = "block";
+        }
+
+        function populateDeleteForm(departmentID, departmentName, exhibitID, exhibitName) {
+            document.getElementById("delete-departmentID").value = departmentID;
+            document.getElementById("delete-exhibitID").value = exhibitID;
+            document.getElementById("deleteDepartmentName").innerText = departmentName;
+            document.getElementById("deleteExhibitName").innerText = exhibitName;
+            document.getElementById("deleteForm").style.display = "block";
+        }
+    </script>
+
+    <script src="./js/update_intersection.js"></script>
+    <script src="./js/delete_intersection.js"></script>
+
+</body>
+</html>

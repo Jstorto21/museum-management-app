@@ -1,0 +1,54 @@
+<!--
+    // Group 68
+    // Members: Joseph Storto and Michael Audi
+    // 3/17/2024
+    // Node.js implementation code adapted from osu-cs340-ecampus/nodejs-starter-app
+    // Scope: Code from starter app adapted to handle Node.js and Handlebars general implementation and boilerplate and functionality
+    // Original code contained in navigation, layout, SQL queries, data verification, and specific implementation details
+    // Source: https://github.com/osu-cs340-ecampus/nodejs-starter-app 
+    // Code for adding files to display in web application copied and adapted from mdn web docs.
+    // Source: https://developer.mozilla.org/en-US/docs/Web/API/File_API/Using_files_from_web_applications
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Include  CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+    <!-- Include jQuery -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+<body>
+
+    <!-- Floating Box to view documents-->
+    <div id="file-box">
+        <h4>View Files</h4>
+        <ul>
+            <li><a href="#" onclick="openFileViewer('/downloads/DDL.sql')">DDL.sql</a></li>
+            <li><a href="#" onclick="openFileViewer('/downloads/DML.sql')">DML.sql</a></li>
+    
+            
+        </ul>
+    </div>
+
+    <!-- for Viewing Files -->
+    <div id="file-modal">
+        <div class="file-modal-content">
+            <span class="close-modal" onclick="closeFileViewer()">&times;</span>
+            <h4 id="file-title"></h4>
+            <pre id="file-content">Loading...</pre>
+        </div>
+    </div>
+
+    <main>
+        {{{body}}}
+    </main>
+
+    <!-- Load JavaScript File -->
+    <script src="/js/documents.js"></script>
+
+</body>
+</html>

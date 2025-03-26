@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!-- 
+    // Joseph Storto
+    // 3/17/2024
+    // Node.js implementation code adapted from osu-cs340-ecampus/nodejs-starter-app
+    // Scope: Code from starter app adapted to handle Node.js and Handlebars general implementation and boilerplate and functionality
+    // Original code contained in navigation, layout, SQL queries, data verification, and specific implementation details
+    // Source: https://github.com/osu-cs340-ecampus/nodejs-starter-app 
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARTES</title>
+</head>
+    <body>
+        <header>
+                <h1>Art Resource Tracking and Exhibition Software</h1>
+        
+            <div>
+                <button class="nav-button" onclick="location.href='/'">Home</button>
+                <button class="nav-button" onclick="location.href='/departments'">Departments</button>
+                <button class="nav-button" onclick="location.href='/artworks'">Artworks</button>
+                <button class="nav-button" onclick="location.href='/employees'">Employees</button>
+                <button class="nav-button" onclick="location.href='/exhibits'">Exhibits</button>
+                <button class="nav-button" onclick="location.href='/department_has_exhibits'">Intersection Table</button>
+            </div>
+        </header>
+        <h2>Page Descriptions</h2>
+
+        <!-- Table -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Page</th>
+                    <th>Purpose</th>
+                </tr>
+            </thead>
+            <tbody id="descriptionTable">
+                <tr>
+                    <td>Home</td>
+                    <td>Home page of the website with descriptions of each page.</td>
+                </tr>
+                <tr>
+                    <td>Departments</td>
+                    <td>Perform CRUD actions on the subject matter Departments of a museum.</td>
+                </tr>
+                <tr>
+                    <td>Artworks</td>
+                    <td>View, add, or delete Artworks held by a museum.</td>
+                </tr>
+                <tr>
+                    <td>Employees</td>
+                    <td>View, add, or delete Employees that work in a museum.</td>
+                </tr>
+                <tr>
+                    <td>Exhibits</td>
+                    <td>Perform CRUD actions on the Exhibits of a museum. Allows for manipulating M:M relationship with Departments.</td>
+                </tr>
+                <tr>
+                    <td>Transaction Table</td>
+                    <td>Display the many-to-many relationship between Departments and Exhibits.</td>
+                </tr>
+            </tbody>
+            
+        </table>
+    </body>
+</html>
+

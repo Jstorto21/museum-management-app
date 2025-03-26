@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<!-- 
+    // Joseph Storto
+    // 3/17/2024
+    // Node.js implementation code adapted from osu-cs340-ecampus/nodejs-starter-app
+    // Scope: Code from starter app adapted to handle Node.js and Handlebars general implementation and boilerplate and functionality
+    // Original code contained in navigation, layout, SQL queries, data verification, and specific implementation details
+    // Source: https://github.com/osu-cs340-ecampus/nodejs-starter-app 
+-->
+<head>
+    <title>Artworks</title>
+</head>
+<body>
+    <header>
+        <h1>Artworks</h1>
+        <div>
+            <button class="nav-button" onclick="location.href='/'">Home</button>
+            <button class="nav-button" onclick="location.href='/departments'">Departments</button>
+            <button class="nav-button" onclick="location.href='/artworks'">Artworks</button>
+            <button class="nav-button" onclick="location.href='/employees'">Employees</button>
+            <button class="nav-button" onclick="location.href='/exhibits'">Exhibits</button>
+            <button class="nav-button" onclick="location.href='/department_has_exhibits'">Intersection Table</button>
+        </div>
+    </header>
+    
+    
+    <h2>View Artworks Table</h2>
+
+    <!-- Artwork Table -->
+    <table id="artworks-table">
+        <thead>
+            <tr>
+                <th>Artwork ID</th>
+                <th>Artwork Name</th>
+                <th>Artist Name</th>
+                <th>Department</th>
+                <th>Exhibit</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="artworkTable">
+            {{#each artworks}}
+            <tr data-value="{{this.artworkID}}">
+                <td>{{this.artworkID}}</td>
+                <td>{{this.artworkName}}</td>
+                <td>{{this.artistName}}</td>
+                <td>{{this.department}}</td>
+                <td>{{this.exhibit}}</td>
+                <td>
+                    <button class="nav-button" onclick="populateDeleteForm({{this.artworkID}}, '{{this.artworkName}}')">Delete</button>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+    <!-- Add Row Button -->
+    <h3>
+    <button class="nav-button" onclick="showForm('addForm')">Add Artwork</button>
+    </h3>
+    
+    <!-- Add Artwork Confirmation -->
+    <div id="addForm" class="form-container">
+        <h3>Add Artwork</h3>
+        <form id="add-artworks-form-ajax" >
+            <label>Artwork Name:</label>
+            <input type="text" id="input-artworkName" required>
+            <label>Artist Name:</label>
+            <input type="text" id="input-artistName" required>
+            <label>Department:</label>
+            <select name"input-departmentID" id="input-departmentID">
+                <option value="">Select a Department</option>
+                {{#each department}}
+                <option value="{{this.departmentID}}">{{this.departmentName}}</option>
+                {{/each}}
+            </select>
+            <label>Exhibit:</label>
+            <select name"input-exhibitID" id="input-exhibitID">
+                <option value="">Select an Exhibit</option>
+                <option value="">None</option>
+                {{#each exhibit}}
+                <option value="{{this.exhibitID}}">{{this.exhibitName}}</option>
+                {{/each}}
+            </select>
+
+            <input type="submit" value="Add Artwork">
+        </form>
+    </div>
+
+    <!-- Delete Artwork Confirmation -->
+    <div id="deleteForm" class="form-container">
+        <h3>Delete Artwork</h3>
+        <p>Are you sure you want to delete <strong id="deleteArtworkName">[Artwork]</strong>?</p>
+        <input type="hidden" id="deleteArtworkID">
+        <button class="nav-button"onclick="deleteArtwork()">Delete Artwork</button>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        function showForm(formId) {
+            document.getElementById("addForm").style.display = "none";
+            document.getElementById("deleteForm").style.display = "none";
+            document.getElementById(formId).style.display = "block";
+        }
+
+        function populateDeleteForm(id, name) {
+            document.getElementById("deleteArtworkID").value = id;
+            document.getElementById("deleteArtworkName").innerText = name;
+            showForm("deleteForm");
+        }
+
+        function addArtwork() {
+            let name = document.getElementById("newArtworkName").value;
+            alert("Adding artwork: " + name);
+            showForm("addForm");
+        }
+
+        function deleteArtwork() {
+            let id = document.getElementById("deleteArtworkID").value;
+            alert("Deleting artwork ID " + id);
+        }
+    </script>
+    {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+    <script src="./js/add_artworks.js"></script>
+    <script src="./js/delete_artworks.js"></script>
+</body>
+</html>

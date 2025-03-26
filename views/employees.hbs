@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<!-- 
+    // Joseph Storto
+    // 3/17/2024
+    // Node.js implementation code adapted from osu-cs340-ecampus/nodejs-starter-app
+    // Scope: Code from starter app adapted to handle Node.js and Handlebars general implementation and boilerplate and functionality
+    // Original code contained in navigation, layout, SQL queries, data verification, and specific implementation details
+    // Source: https://github.com/osu-cs340-ecampus/nodejs-starter-app 
+-->
+<head>
+    <title>Employees</title>
+</head>
+<body>
+    <header>
+        <h1>Employees</h1>
+        <div>
+            <button class="nav-button" onclick="location.href='/'">Home</button>
+            <button class="nav-button" onclick="location.href='/departments'">Departments</button>
+            <button class="nav-button" onclick="location.href='/artworks'">Artworks</button>
+            <button class="nav-button" onclick="location.href='/employees'">Employees</button>
+            <button class="nav-button" onclick="location.href='/exhibits'">Exhibits</button>
+            <button class="nav-button" onclick="location.href='/department_has_exhibits'">Intersection Table</button>
+        </div>
+    </header>
+
+    <h2>View Employees Table</h2>
+
+    <!-- Table -->
+    <table id="employees-table">
+        <thead>
+            <tr>
+                <th>Employee ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Department</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="employeeTable">
+            {{#each employee}}
+            <tr data-value="{{this.employeeID}}">
+                <td>{{this.employeeID}}</td>
+                <td>{{this.firstName}}</td>
+                <td>{{this.lastName}}</td>
+                <td>{{this.department}}</td>
+                <td>
+                    <button class="nav-button" onclick="populateDeleteForm({{this.employeeID}}, '{{this.firstName}}')">Delete</button>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+    <!-- Add Row Button -->
+    <h3>
+    <th><button class="nav-button" onclick="showForm('addForm')">Add Employee</button></th>
+    </h3>
+    <!-- Add Employee Confirmation -->
+    <div id="addForm" class="form-container">
+        <h3>Add Employee</h3>
+        <form id="add-employees-form-ajax" >
+            <label>First Name:</label>
+            <input type="text" id="input-firstName" required>
+            <label>Last Name:</label>
+            <input type="text" id="input-lastName" required>
+            <label>Department:</label>
+            <select name"input-departmentID" id="input-departmentID">
+                <option value="">Select a Department</option>
+                {{#each department}}
+                <option value="{{this.departmentID}}">{{this.departmentName}}</option>
+                {{/each}}
+            </select>
+            <input type="submit" value="Add Employee">
+        </form>
+    </div>
+
+    <!-- Delete Employee Confirmation -->
+    <div id="deleteForm" class="form-container">
+        <h3>Delete Employee</h3>
+        <p>Are you sure you want to delete <strong id="deleteEmployeeName">[Employee]</strong>?</p>
+        <input type="hidden" id="deleteEmployeeID">
+        <button class="nav-button" onclick="deleteEmployee()">Delete Employee</button>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        function showForm(formId) {
+            document.getElementById("addForm").style.display = "none";
+            document.getElementById("deleteForm").style.display = "none";
+            document.getElementById(formId).style.display = "block";
+        }
+
+        function populateDeleteForm(id, name) {
+            document.getElementById("deleteEmployeeID").value = id;
+            document.getElementById("deleteEmployeeName").innerText = name;
+            showForm("deleteForm");
+        }
+
+        function addEmployee() {
+            let name = document.getElementById("newEmployeeName").value;
+            alert("Adding employee: " + name);
+            showForm('addForm');
+        }
+
+        function deleteEmployee() {
+            let id = document.getElementById("deleteEmployeeID").value;
+            alert("Deleting employee ID " + id);
+        }
+    </script>
+    {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+    <script src="./js/add_employees.js"></script>
+    <script src="./js/delete_employees.js"></script>
+</body>
+</html>

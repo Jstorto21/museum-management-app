@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<!-- 
+    // Joseph Storto
+    // 3/17/2024
+    // Node.js implementation code adapted from osu-cs340-ecampus/nodejs-starter-app
+    // Scope: Code from starter app adapted to handle Node.js and Handlebars general implementation and boilerplate and functionality
+    // Original code contained in navigation, layout, SQL queries, data verification, and specific implementation details
+    // Source: https://github.com/osu-cs340-ecampus/nodejs-starter-app 
+-->
+<head>
+    <title>Departments</title>
+</head>
+<body>
+    <header>
+        <h1>Departments</h1>
+        <div>
+            <button class="nav-button" onclick="location.href='/'">Home</button>
+            <button class="nav-button" onclick="location.href='/departments'">Departments</button>
+            <button class="nav-button" onclick="location.href='/artworks'">Artworks</button>
+            <button class="nav-button" onclick="location.href='/employees'">Employees</button>
+            <button class="nav-button" onclick="location.href='/exhibits'">Exhibits</button>
+            <button class="nav-button" onclick="location.href='/department_has_exhibits'">Intersection Table</button>
+        </div>
+    </header>
+    
+    <h2>View Departments Table</h2>
+    <table id = "departments-table">
+        <thead>
+            <tr>
+                <th>Department ID</th>
+                <th>Department Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="departmentTable">
+             {{#each departments}}
+            <tr data-value="{{this.departmentID}}">
+                <td>{{this.departmentID}}</td>
+                <td>{{this.departmentName}}</td>
+                <td>
+                    <button class="nav-button" onclick="populateEditForm({{this.departmentID}}, '{{this.departmentName}}')">Edit</button>
+                    <button class="nav-button" onclick="populateDeleteForm({{this.departmentID}}, '{{this.departmentName}}')">Delete</button>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+    <h3>
+    <button class="nav-button" onclick="showForm('addForm')">Add Department</button>
+    </h3>
+
+    <!-- Add Department Form -->
+    <div id="addForm" class="form-container">
+        <h3>Add Department</h3>
+        <form id="add-departments-form-ajax">
+            <label>Department Name:</label>
+            <input type="text" id="input-departmentName" required>
+            <input type="submit" value="Add Department">
+        </form>
+    </div>
+
+    <!-- Update Department Form -->
+    <div id="updateForm" class="form-container">
+        <h3>Update Department</h3>
+        <form id="update-departments-form-ajax">
+            <input type="hidden" id="updateDepartmentID">
+
+            <label for="update-department-name">New Department Name:</label>
+            <input type="text" id="update-department-name" required>
+
+            <input type="submit" value="Update Department">
+        </form>
+    </div>
+
+
+    <!-- Delete Department Confirmation -->
+    
+    <div id="deleteForm" class="form-container">
+        <h3>Delete Department</h3>
+        <p>Are you sure you want to delete <strong id="deleteDepartmentName">[Select a Department]</strong>?</p>
+        <input type="hidden" id="deleteDepartmentID">
+        <button class="nav-button" onclick="deleteDepartment()">Confirm Delete</button>
+    </div>
+
+
+    <script>
+        function showForm(formId) {
+            document.getElementById("addForm").style.display = "none";
+            document.getElementById("updateForm").style.display = "none";
+            document.getElementById("deleteForm").style.display = "none";
+            document.getElementById(formId).style.display = "block";
+        }
+
+        function populateEditForm(id, name) {
+            let updateIDField = document.getElementById("updateDepartmentID");
+            let updateNameField = document.getElementById("update-department-name");
+
+            if (updateIDField && updateNameField) {
+                updateIDField.value = id;  // Set the hidden ID field
+                updateNameField.value = name;  // Fill the input with the current department name
+                showForm('updateForm'); // Show the update form
+            } else {
+                console.error("Update form fields not found.");
+            }
+        }
+
+
+        function populateDeleteForm(id, name) {
+            document.getElementById("deleteDepartmentID").value = id;
+            document.getElementById("deleteDepartmentName").innerText = name;
+            showForm('deleteForm');
+        }
+
+        function addDepartment() {
+            let name = document.getElementById("newDepartmentName").value;
+            alert("Adding department: " + name);
+        }
+
+        function updateDepartment() {
+            let id = document.getElementById("updateDepartmentID").value;
+            let name = document.getElementById("updateDepartmentName").value;
+            alert("Updating department ID " + id + " to " + name);
+        }
+
+        function deleteDepartment() {
+            let id = document.getElementById("deleteDepartmentID").value;
+            alert("Deleting department ID " + id);
+        }
+    </script>
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_departments.js"></script>
+<script src="./js/delete_departments.js"></script>
+<script src="./js/update_departments.js"></script>
+
+
+</body>
+</html>
